@@ -23,9 +23,11 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/admin/categories', require('./routes/admin/categories'));
 app.use('/api/admin/loans', require('./routes/admin/loans'));
 app.use('/api/admin/commodity-prices', require('./routes/admin/commodity-prices'));
+app.use('/api/admin/apply-now', require('./routes/admin/apply-now'));
 app.use('/api/public/categories', require('./routes/public/categories'));
 app.use('/api/public/loans', require('./routes/public/loans'));
 app.use('/api/public/commodity-prices', require('./routes/public/commodity-prices'));
+app.use('/api/public/apply-now', require('./routes/public/apply-now'));
 
 // Health Check
 app.get('/api/health', (req, res) => {

@@ -22,11 +22,13 @@ Authorization: Bearer <your-jwt-token>
 2. [Admin - Categories APIs](#admin---categories-apis)
 3. [Admin - Loans APIs](#admin---loans-apis)
 4. [Admin - Commodity Prices APIs](#admin---commodity-prices-apis)
-5. [Public - Categories APIs](#public---categories-apis)
-6. [Public - Loans APIs](#public---loans-apis)
-7. [Public - Commodity Prices APIs](#public---commodity-prices-apis)
-8. [Health Check](#health-check)
-9. [Error Responses](#error-responses)
+5. [Admin - Apply Now APIs](#admin---apply-now-apis)
+6. [Public - Categories APIs](#public---categories-apis)
+7. [Public - Loans APIs](#public---loans-apis)
+8. [Public - Commodity Prices APIs](#public---commodity-prices-apis)
+9. [Public - Apply Now APIs](#public---apply-now-apis)
+10. [Health Check](#health-check)
+11. [Error Responses](#error-responses)
 
 ---
 
@@ -1180,6 +1182,161 @@ Authorization: Bearer <token>
 
 ---
 
+## Admin - Apply Now APIs
+
+All endpoints in this section require authentication.
+
+### 1. Create or Update Apply Now Settings
+
+Create or update the Apply Now button settings (active/inactive status).
+
+**Endpoint:** `POST /api/admin/apply-now`
+
+**Authentication:** Required
+
+**Request Body:**
+```json
+{
+  "isActive": true,
+  "description": "Apply Now button is currently active"
+}
+```
+
+**Request Headers:**
+```
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Request Fields:**
+- `isActive` (boolean, required) - Whether the Apply Now button is active (true) or inactive (false)
+- `description` (string, optional) - Optional description for the Apply Now settings
+
+**Success Response (201 Created):**
+```json
+{
+  "success": true,
+  "message": "Apply Now settings updated successfully",
+  "applyNow": {
+    "_id": "64a1b2c3d4e5f6g7h8i9j0k12",
+    "isActive": true,
+    "description": "Apply Now button is currently active",
+    "createdAt": "2024-01-15T18:00:00.000Z",
+    "updatedAt": "2024-01-15T18:00:00.000Z"
+  }
+}
+```
+
+**Error Response (400 Bad Request):**
+```json
+{
+  "success": false,
+  "message": "Validation failed",
+  "errors": [
+    {
+      "msg": "isActive must be a boolean value",
+      "param": "isActive",
+      "location": "body"
+    }
+  ]
+}
+```
+
+**Error Response (401 Unauthorized):**
+```json
+{
+  "success": false,
+  "message": "No token provided, authorization denied"
+}
+```
+
+---
+
+### 2. Get Apply Now Settings
+
+Get the current Apply Now button settings.
+
+**Endpoint:** `GET /api/admin/apply-now`
+
+**Authentication:** Required
+
+**Request Headers:**
+```
+Authorization: Bearer <token>
+```
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "applyNow": {
+    "_id": "64a1b2c3d4e5f6g7h8i9j0k12",
+    "isActive": true,
+    "description": "Apply Now button is currently active",
+    "createdAt": "2024-01-15T18:00:00.000Z",
+    "updatedAt": "2024-01-15T18:00:00.000Z"
+  }
+}
+```
+
+**Note:** If no settings exist, a default settings document will be created automatically with `isActive: true`.
+
+---
+
+### 3. Update Apply Now Settings
+
+Update the Apply Now button settings (partial update supported).
+
+**Endpoint:** `PUT /api/admin/apply-now`
+
+**Authentication:** Required
+
+**Request Body:** (All fields are optional)
+```json
+{
+  "isActive": false,
+  "description": "Apply Now button is currently inactive"
+}
+```
+
+**Request Headers:**
+```
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "message": "Apply Now settings updated successfully",
+  "applyNow": {
+    "_id": "64a1b2c3d4e5f6g7h8i9j0k12",
+    "isActive": false,
+    "description": "Apply Now button is currently inactive",
+    "createdAt": "2024-01-15T18:00:00.000Z",
+    "updatedAt": "2024-01-15T19:00:00.000Z"
+  }
+}
+```
+
+**Error Response (400 Bad Request):**
+```json
+{
+  "success": false,
+  "message": "Validation failed",
+  "errors": [
+    {
+      "msg": "isActive must be a boolean value",
+      "param": "isActive",
+      "location": "body"
+    }
+  ]
+}
+```
+
+---
+
 ## Public - Categories APIs
 
 These endpoints do not require authentication and only return active categories.
@@ -1728,6 +1885,54 @@ GET /api/public/commodity-prices/type/Diesel
 
 ---
 
+## Public - Apply Now APIs
+
+These endpoints do not require authentication and return the current Apply Now button status.
+
+### 1. Get Apply Now Status
+
+Get the current status of the Apply Now button (active/inactive).
+
+**Endpoint:** `GET /api/public/apply-now`
+
+**Authentication:** Not required
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "isActive": true,
+  "description": "Apply Now button is currently active"
+}
+```
+
+**Response Fields:**
+- `success`: Boolean indicating request success
+- `isActive`: Boolean indicating if the Apply Now button is active (true) or inactive (false)
+- `description`: Optional description string (null if not set)
+
+**Note:** If no settings exist, a default settings document will be created automatically with `isActive: true`.
+
+**Example Response (Inactive):**
+```json
+{
+  "success": true,
+  "isActive": false,
+  "description": "Apply Now button is currently inactive"
+}
+```
+
+**Example Response (No Description):**
+```json
+{
+  "success": true,
+  "isActive": true,
+  "description": null
+}
+```
+
+---
+
 ## Health Check
 
 ### Get Server Status
@@ -1891,6 +2096,22 @@ All error responses follow this general structure:
 ```
 
 **Note:** The combination of `commodityType`, `state`, and `city` must be unique.
+
+### ApplyNow Model
+```json
+{
+  "_id": "ObjectId",
+  "isActive": "boolean (required, default: true)",
+  "description": "string (optional)",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+**Note:** 
+- Only one ApplyNow settings document should exist in the collection
+- The `getSettings()` static method ensures a single document exists
+- If no document exists, a default one is created with `isActive: true`
 
 ---
 
