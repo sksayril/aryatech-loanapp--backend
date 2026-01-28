@@ -1,6 +1,7 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const ApplyNow = require('../../models/ApplyNow');
+const ApplyNowUSA = require('../../models/ApplyNowUSA');
 const authMiddleware = require('../../middleware/auth');
 
 const router = express.Router();
@@ -147,8 +148,8 @@ router.post('/usa', [
 
     const { isActive, description } = req.body;
 
-    // Get existing settings or create new one
-    let applyNowSettings = await ApplyNow.findOne();
+    // Get existing settings or create new one (USA collection)
+    let applyNowSettings = await ApplyNowUSA.findOne();
     
     if (applyNowSettings) {
       // Update existing settings
@@ -159,7 +160,7 @@ router.post('/usa', [
       await applyNowSettings.save();
     } else {
       // Create new settings
-      applyNowSettings = new ApplyNow({
+      applyNowSettings = new ApplyNowUSA({
         isActive,
         description: description || ''
       });
@@ -181,10 +182,10 @@ router.post('/usa', [
   }
 });
 
-// Get Apply Now Settings (GET)
+// Get Apply Now Settings (GET) - USA
 router.get('/usa', async (req, res) => {
   try {
-    const applyNowSettings = await ApplyNow.getSettings();
+    const applyNowSettings = await ApplyNowUSA.getSettings();
 
     res.json({
       success: true,
@@ -200,7 +201,7 @@ router.get('/usa', async (req, res) => {
   }
 });
 
-// Update Apply Now Settings (PUT)
+// Update Apply Now Settings (PUT) - USA
 router.put('/usa', [
   body('isActive').optional().isBoolean().withMessage('isActive must be a boolean value'),
   body('description').optional().trim()
@@ -217,11 +218,11 @@ router.put('/usa', [
 
     const { isActive, description } = req.body;
 
-    // Get existing settings or create new one
-    let applyNowSettings = await ApplyNow.findOne();
+    // Get existing settings or create new one (USA collection)
+    let applyNowSettings = await ApplyNowUSA.findOne();
     
     if (!applyNowSettings) {
-      applyNowSettings = new ApplyNow({
+      applyNowSettings = new ApplyNowUSA({
         isActive: isActive !== undefined ? isActive : true,
         description: description || ''
       });

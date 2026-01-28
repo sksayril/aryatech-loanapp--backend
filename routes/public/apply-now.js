@@ -1,5 +1,6 @@
 const express = require('express');
 const ApplyNow = require('../../models/ApplyNow');
+const ApplyNowUSA = require('../../models/ApplyNowUSA');
 
 const router = express.Router();
 
@@ -25,7 +26,7 @@ router.get('/', async (req, res) => {
 
 router.get('/usa', async (req, res) => {
   try {
-    const applyNowSettings = await ApplyNow.getSettings();
+    const applyNowSettings = await ApplyNowUSA.getSettings();
 
     res.json({
       success: true,

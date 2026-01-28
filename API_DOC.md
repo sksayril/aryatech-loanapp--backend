@@ -1337,6 +1337,113 @@ Content-Type: application/json
 
 ---
 
+### 4. USA Apply Now Settings
+
+USA-specific endpoints for managing the Apply Now button. These use the `/usa` suffix and share the same data model as the default Apply Now settings.
+
+#### 4.1 Create or Update USA Apply Now Settings
+
+Create or update the Apply Now button settings for USA (active/inactive status).
+
+**Endpoint:** `POST /api/admin/apply-now/usa`
+
+**Authentication:** Required
+
+**Request Body:**
+```json
+{
+  "isActive": true,
+  "description": "USA Apply Now button is currently active"
+}
+```
+
+**Request Headers:**
+```
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Success Response (201 Created):**
+```json
+{
+  "success": true,
+  "message": "Apply Now settings updated successfully",
+  "applyNow": {
+    "_id": "64a1b2c3d4e5f6g7h8i9j0k13",
+    "isActive": true,
+    "description": "USA Apply Now button is currently active",
+    "createdAt": "2024-01-15T18:00:00.000Z",
+    "updatedAt": "2024-01-15T18:00:00.000Z"
+  }
+}
+```
+
+#### 4.2 Get USA Apply Now Settings
+
+Get the current Apply Now button settings for USA.
+
+**Endpoint:** `GET /api/admin/apply-now/usa`
+
+**Authentication:** Required
+
+**Request Headers:**
+```
+Authorization: Bearer <token>
+```
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "applyNow": {
+    "_id": "64a1b2c3d4e5f6g7h8i9j0k13",
+    "isActive": true,
+    "description": "USA Apply Now button is currently active",
+    "createdAt": "2024-01-15T18:00:00.000Z",
+    "updatedAt": "2024-01-15T18:00:00.000Z"
+  }
+}
+```
+
+#### 4.3 Update USA Apply Now Settings
+
+Update the USA Apply Now button settings (partial update supported).
+
+**Endpoint:** `PUT /api/admin/apply-now/usa`
+
+**Authentication:** Required
+
+**Request Body:** (All fields are optional)
+```json
+{
+  "isActive": false,
+  "description": "USA Apply Now button is currently inactive"
+}
+```
+
+**Request Headers:**
+```
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "message": "Apply Now settings updated successfully",
+  "applyNow": {
+    "_id": "64a1b2c3d4e5f6g7h8i9j0k13",
+    "isActive": false,
+    "description": "USA Apply Now button is currently inactive",
+    "createdAt": "2024-01-15T18:00:00.000Z",
+    "updatedAt": "2024-01-15T19:00:00.000Z"
+  }
+}
+```
+
+---
+
 ## Public - Categories APIs
 
 These endpoints do not require authentication and only return active categories.
