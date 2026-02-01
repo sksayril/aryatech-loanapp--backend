@@ -2,7 +2,7 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const ApplyNow = require('../../models/ApplyNow');
 const ApplyNowUSA = require('../../models/ApplyNowUSA');
-const ApplyNowIndia = require('../../models/ApplyNowindia');
+const ApplyNowIndia = require('../../models/ApplyNowIndia');
 const authMiddleware = require('../../middleware/auth');
 
 const router = express.Router();

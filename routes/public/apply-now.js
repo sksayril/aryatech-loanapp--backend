@@ -1,7 +1,7 @@
 const express = require('express');
 const ApplyNow = require('../../models/ApplyNow');
 const ApplyNowUSA = require('../../models/ApplyNowUSA');
-const ApplyNowIndia = require('../../models/ApplyNowindia');
+const ApplyNowIndia = require('../../models/ApplyNowIndia');
 
 const router = express.Router();
 

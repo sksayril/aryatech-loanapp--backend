@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+﻿const mongoose = require('mongoose');
 
 const applyNowIndiaSchema = new mongoose.Schema({
   isActive: {
@@ -24,4 +24,3 @@ applyNowIndiaSchema.statics.getSettings = async function () {
 };
 
 module.exports = mongoose.model('ApplyNowIndia', applyNowIndiaSchema);
-
