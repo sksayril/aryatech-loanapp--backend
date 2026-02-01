@@ -1444,6 +1444,113 @@ Content-Type: application/json
 
 ---
 
+### 5. India Apply Now Settings
+
+India-specific endpoints for managing the Apply Now button. These use the `/india` suffix and share the same data model as the default Apply Now settings.
+
+#### 5.1 Create or Update India Apply Now Settings
+
+Create or update the Apply Now button settings for India (active/inactive status).
+
+**Endpoint:** `POST /api/admin/apply-now/india`
+
+**Authentication:** Required
+
+**Request Body:**
+```json
+{
+  "isActive": true,
+  "description": "India Apply Now button is currently active"
+}
+```
+
+**Request Headers:**
+```
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Success Response (201 Created):**
+```json
+{
+  "success": true,
+  "message": "Apply Now settings updated successfully",
+  "applyNow": {
+    "_id": "64a1b2c3d4e5f6g7h8i9j0k14",
+    "isActive": true,
+    "description": "India Apply Now button is currently active",
+    "createdAt": "2024-01-15T18:00:00.000Z",
+    "updatedAt": "2024-01-15T18:00:00.000Z"
+  }
+}
+```
+
+#### 5.2 Get India Apply Now Settings
+
+Get the current Apply Now button settings for India.
+
+**Endpoint:** `GET /api/admin/apply-now/india`
+
+**Authentication:** Required
+
+**Request Headers:**
+```
+Authorization: Bearer <token>
+```
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "applyNow": {
+    "_id": "64a1b2c3d4e5f6g7h8i9j0k14",
+    "isActive": true,
+    "description": "India Apply Now button is currently active",
+    "createdAt": "2024-01-15T18:00:00.000Z",
+    "updatedAt": "2024-01-15T18:00:00.000Z"
+  }
+}
+```
+
+#### 5.3 Update India Apply Now Settings
+
+Update the India Apply Now button settings (partial update supported).
+
+**Endpoint:** `PUT /api/admin/apply-now/india`
+
+**Authentication:** Required
+
+**Request Body:** (All fields are optional)
+```json
+{
+  "isActive": false,
+  "description": "India Apply Now button is currently inactive"
+}
+```
+
+**Request Headers:**
+```
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "message": "Apply Now settings updated successfully",
+  "applyNow": {
+    "_id": "64a1b2c3d4e5f6g7h8i9j0k14",
+    "isActive": false,
+    "description": "India Apply Now button is currently inactive",
+    "createdAt": "2024-01-15T18:00:00.000Z",
+    "updatedAt": "2024-01-15T19:00:00.000Z"
+  }
+}
+```
+
+---
+
 ## Public - Categories APIs
 
 These endpoints do not require authentication and only return active categories.
@@ -2040,6 +2147,58 @@ Get the current status of the Apply Now button (active/inactive).
 
 ---
 
+### 2. Get USA Apply Now Status
+
+Get the current status of the Apply Now button for USA (active/inactive).
+
+**Endpoint:** `GET /api/public/apply-now/usa`
+
+**Authentication:** Not required
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "isActive": true,
+  "description": "USA Apply Now button is currently active"
+}
+```
+
+**Response Fields:**
+- `success`: Boolean indicating request success
+- `isActive`: Boolean indicating if the Apply Now button is active (true) or inactive (false)
+- `description`: Optional description string (null if not set)
+
+**Note:** If no settings exist, a default settings document will be created automatically with `isActive: true`.
+
+---
+
+### 3. Get India Apply Now Status
+
+Get the current status of the Apply Now button for India (active/inactive).
+
+**Endpoint:** `GET /api/public/apply-now/india`
+
+**Authentication:** Not required
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "isActive": true,
+  "description": "India Apply Now button is currently active"
+}
+```
+
+**Response Fields:**
+- `success`: Boolean indicating request success
+- `isActive`: Boolean indicating if the Apply Now button is active (true) or inactive (false)
+- `description`: Optional description string (null if not set)
+
+**Note:** If no settings exist, a default settings document will be created automatically with `isActive: true`.
+
+---
+
 ## Health Check
 
 ### Get Server Status
@@ -2219,6 +2378,40 @@ All error responses follow this general structure:
 - Only one ApplyNow settings document should exist in the collection
 - The `getSettings()` static method ensures a single document exists
 - If no document exists, a default one is created with `isActive: true`
+
+### ApplyNowUSA Model
+```json
+{
+  "_id": "ObjectId",
+  "isActive": "boolean (required, default: true)",
+  "description": "string (optional)",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+**Note:** 
+- Only one ApplyNowUSA settings document should exist in the collection
+- The `getSettings()` static method ensures a single document exists
+- If no document exists, a default one is created with `isActive: true`
+- Used for USA-specific Apply Now button settings
+
+### ApplyNowIndia Model
+```json
+{
+  "_id": "ObjectId",
+  "isActive": "boolean (required, default: true)",
+  "description": "string (optional)",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+**Note:** 
+- Only one ApplyNowIndia settings document should exist in the collection
+- The `getSettings()` static method ensures a single document exists
+- If no document exists, a default one is created with `isActive: true`
+- Used for India-specific Apply Now button settings
 
 ---
 
